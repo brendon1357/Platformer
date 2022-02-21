@@ -28,12 +28,12 @@ RED = (255, 0, 0)
 BLACK = (0, 0, 0)
 pygame.display.set_caption("Platformer")
 
-REFERENCEPLAYERIMG = pygame.image.load("player1.png")
-BACKGROUND = pygame.image.load("LavaBackground.jpeg")
-FLOOR_IMG = pygame.image.load("Lava_3_1_1432x50.png")
-PLATFORM_IMG = pygame.image.load("Platform.png")
-ENEMY_IMG = pygame.image.load("fireball.png")
-PROJECTILE_IMG = pygame.image.load("sphere-14.png")
+REFERENCEPLAYERIMG = pygame.image.load("Images/player1.png")
+BACKGROUND = pygame.image.load("Images/LavaBackground.jpeg")
+FLOOR_IMG = pygame.image.load("Images/Lava_3_1_1432x50.png")
+PLATFORM_IMG = pygame.image.load("Images/Platform.png")
+ENEMY_IMG = pygame.image.load("Images/fireball.png")
+PROJECTILE_IMG = pygame.image.load("Images/sphere-14.png")
 CURSOR_IMG = pygame.Surface((20, 20), pygame.SRCALPHA)
 CURSOR_RECT = CURSOR_IMG.get_rect()
 
@@ -230,7 +230,7 @@ class Player:
         self.index = 0
         self.counter = 0
         for i in range(1, 5):
-            img_right = pygame.image.load(f"player{i}.png")
+            img_right = pygame.image.load(f"Images/player{i}.png")
             img_left = pygame.transform.flip(img_right, True, False)
             self.images_right.append(img_right)
             self.images_left.append(img_left)
