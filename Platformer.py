@@ -129,12 +129,6 @@ class Player:
                     self.rect.x = 850
                 else:
                     dx += (self.score//10 + 14)
-                    """
-                    if self.score > 5:
-                        dx += 19
-                    else:
-                        dx += 14
-                    """
 
             if key_input[pygame.K_a]:
                 self.direction = -1
@@ -144,12 +138,6 @@ class Player:
                     self.rect.x = 0
                 else:
                     dx -= (self.score//10 + 9)
-                    """
-                    if self.score > 5:
-                        dx -= 14
-                    else:
-                        dx -= 9
-                    """
 
             if key_input[pygame.K_SPACE] and not self.jumped and not self.falling:
                 if self.vel_y <= 1:
