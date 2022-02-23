@@ -128,7 +128,13 @@ class Player:
                 if self.rect.x >= 850:
                     self.rect.x = 850
                 else:
-                    dx += 14
+                    dx += (self.score//10 + 14)
+                    """
+                    if self.score > 5:
+                        dx += 19
+                    else:
+                        dx += 14
+                    """
 
             if key_input[pygame.K_a]:
                 self.direction = -1
@@ -137,7 +143,13 @@ class Player:
                 if self.rect.x <= 0:
                     self.rect.x = 0
                 else:
-                    dx -= 9
+                    dx -= (self.score//10 + 9)
+                    """
+                    if self.score > 5:
+                        dx -= 14
+                    else:
+                        dx -= 9
+                    """
 
             if key_input[pygame.K_SPACE] and not self.jumped and not self.falling:
                 if self.vel_y <= 1:
@@ -202,7 +214,7 @@ class Player:
                     platform.passed = True
                     add_platform = True
 
-                platform.move(5)
+                platform.move(self.score//10 + 5)
 
             if add_platform:
                 platforms.append(Platform(WIN, 900))
@@ -325,7 +337,6 @@ def game_over_display(win, score):
     win.blit(restart_label, ((WIN_WIDTH//2) - (restart_label.get_width()//2), (WIN_HEIGHT//2) - (restart_label.get_height()//2) - 100))
     win.blit(score_label, ((WIN_WIDTH//2) - (score_label.get_width()//2), (WIN_HEIGHT//2) - (score_label.get_height()//2) - 25))
 
-
 def pause(player, platforms, floor, enemies, win):
     for platform in platforms:
         platform.move(0)
@@ -400,6 +411,7 @@ def create_enemies(enemies, num_of_enemies):
 
 
 def main():
+    start_time = 0
     end_by_enemy = 0
     end_by_fall = 0
     end_score = 0
@@ -418,6 +430,7 @@ def main():
     start = False
     lost = False
     paused = False
+    wait = False
     while run:
         WIN.blit(BACKGROUND, (0, 0))
         clock.tick(60)
@@ -425,14 +438,15 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
             if event.type == pygame.KEYDOWN:
-                if event.key != pygame.K_ESCAPE and not paused:
-                    start = True
-                elif event.key == pygame.K_ESCAPE and not paused and not lost:
-                    paused = True
-                    start = False
-                elif event.key == pygame.K_ESCAPE and paused:
-                    paused = False
-                    start = True
+                if not wait:
+                    if event.key != pygame.K_ESCAPE and not paused:
+                        start = True
+                    elif event.key == pygame.K_ESCAPE and not paused and not lost:
+                        paused = True
+                        start = False
+                    elif event.key == pygame.K_ESCAPE and paused:
+                        paused = False
+                        start = True
             if event.type == pygame.MOUSEMOTION:
                 CURSOR_RECT.center = event.pos
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not paused and start:
@@ -441,19 +455,24 @@ def main():
                     # 20 and 65 used to place projectile near player's hand
                     projectiles.append(Projectile(WIN, player.rect.x + 20, player.rect.y + 65, pos))
         if lost:
+            wait = True 
             CURSOR_RECT.center = (-10, -10)
             game_over_display(WIN, end_score)
+            if pygame.time.get_ticks() - start_time >= 500:
+                wait = False
         if paused and not start:
             pause(player, platforms, floor, enemies, WIN) # stops all movement
         if start:
+            start_time = pygame.time.get_ticks()
             lost = False
             end_by_fall = player.update(end_by_fall, platforms)
             area = 0
             gap = 120
             end_by_enemy = handle_enemies(enemies, player, end_by_enemy, area, gap)
             player.score = handle_projectiles(projectiles, platforms, enemies, player.score)
-            floor.move(8)
-            player.move(5)
+
+            player.move(player.score//10 + 5)
+            floor.move(player.score//10 + 8)
 
             if end_by_fall == -1 or end_by_enemy == -1:
                 end_score = player.score
