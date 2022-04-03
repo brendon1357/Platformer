@@ -460,7 +460,7 @@ def main():
             player.score = handle_projectiles(projectiles, platforms, enemies, player.score)
 
             player.move(player.score//10 + 5)
-            floor.move(player.score//10 + 8)
+            floor.move(player.score//10 + 5)
 
             if end_by_fall == -1 or end_by_enemy == -1:
                 end_score = player.score
