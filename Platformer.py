@@ -22,8 +22,8 @@ pygame.font.init()
 WIN_WIDTH = 900
 WIN_HEIGHT = 750
 WIN = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
-FONT = pygame.font.SysFont("comicsans", 50)
-PAUSE_FONT = pygame.font.SysFont("comicsans", 75)
+FONT = pygame.font.Font("Marlboro.ttf", 50)
+PAUSE_FONT = pygame.font.Font("Marlboro.ttf", 75)
 RED = (255, 0, 0)
 BLACK = (0, 0, 0)
 pygame.display.set_caption("Platformer")
